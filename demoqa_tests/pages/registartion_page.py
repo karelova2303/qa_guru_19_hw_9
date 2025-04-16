@@ -1,9 +1,11 @@
 from selene import browser, be, have, command
 
-from model import resource
+from demoqa_tests import resource
+from demoqa_tests.data.users import User
 
 
-class RegistrationPage:
+class RegistrationPage():
+
     def __init__(self):
         self.states_and_cities = browser.all('[id^=react-select][id*=option]')
 
@@ -60,19 +62,18 @@ class RegistrationPage:
             have.exact_text(title)
         )
 
-    def should_registered_user_with(self, full_name, email, gender,
-                                    mobile, date_of_birth, subject,
-                                    hobby, file, address, state_and_city):
+    def should_registered_user_with(self, student: User):
         browser.element('.table').all('td').even.should(
-            have.exact_texts(full_name,
-                             email,
-                             gender,
-                             mobile,
-                             date_of_birth,
-                             subject,
-                             hobby,
-                             file,
-                             address,
-                             state_and_city,
-                             )
+            have.exact_texts(
+                f'{student.first_name} {student.last_name}',
+                student.userEmail,
+                student.gender,
+                student.mobile,
+                f'{student.day} {student.month},{student.year}',
+                student.subject,
+                student.hobby,
+                student.file,
+                student.address,
+                f'{student.state} {student.city}',
+            )
         )
