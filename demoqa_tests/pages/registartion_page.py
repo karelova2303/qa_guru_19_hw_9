@@ -1,4 +1,5 @@
 from selene import browser, be, have, command
+from selenium.webdriver import Keys
 
 from demoqa_tests import resource
 from demoqa_tests.data.users import User
@@ -38,11 +39,9 @@ class RegistrationPage():
     def fill_mobile_number(self, value):
         self.number.should(be.blank).type(value)
 
-    def fill_date_of_birth(self, day, month, year):
-        self.dateOfBirthInput.click()
-        browser.element('.react-datepicker__month-select').type(month)
-        browser.element('.react-datepicker__year-select').type(year)
-        browser.element(f'.react-datepicker__day--0{day}:not(.react-datepicker__day--outside-month)').click()
+    def fill_date_of_birth(self, date_of_birth):
+        self.dateOfBirthInput.send_keys(Keys.CONTROL + "A")
+        self.dateOfBirthInput.type(date_of_birth).press_enter()
 
     def select_subjects(self, value):
         self.subject.perform(
@@ -74,7 +73,7 @@ class RegistrationPage():
         self.fill_email(user.user_email)
         self.select_gender(user.gender)
         self.fill_mobile_number(user.mobile)
-        self.fill_date_of_birth(user.day, user.month, user.year)
+        self.fill_date_of_birth(user.date_of_birth)
         self.select_subjects(user.subject)
         self.select_hobbies(user.hobby)
         self.upload_picture(user.file)
@@ -83,9 +82,10 @@ class RegistrationPage():
         self.select_city(user.city)
         self.click_submit()
 
-    def should_title_submit_the_form(self, title):
+    def should_title_registered_the_form(self):
+        title_registered = 'Thanks for submitting the form'
         browser.element('#example-modal-sizes-title-lg').should(
-            have.exact_text(title)
+            have.exact_text(title_registered)
         )
 
     def should_registered_user_with(self, student: User):
@@ -95,7 +95,7 @@ class RegistrationPage():
                 student.user_email,
                 student.gender,
                 student.mobile,
-                f'{student.day} {student.month},{student.year}',
+                f'{student.date_of_birth[0]} {student.date_of_birth[1]},{student.date_of_birth[2]}',
                 student.subject,
                 student.hobby,
                 student.file,

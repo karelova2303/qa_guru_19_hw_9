@@ -9,9 +9,7 @@ class User:
     user_email: str
     gender: str
     mobile: str
-    day: str
-    month: str
-    year: str
+    date_of_birth: []
     subject: str
     hobby: enum
     file: str
@@ -19,19 +17,17 @@ class User:
     state: str
     city: str
 
-    def __init__(self, first_name, last_name,
-                 user_email, gender, mobile, day, month, year, subject, hobby, file, address, state, city):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.user_email = user_email
-        self.gender = gender
-        self.mobile = mobile
-        self.day = day
-        self.month = month
-        self.year = year
-        self.subject = subject
-        self.hobby = hobby
-        self.file = file
-        self.address = address
-        self.state = state
-        self.city = city
+
+student_filatova = User(first_name='Veronika',
+                        last_name='Filatova',
+                        user_email='Veronika_Fila@mail.com',
+                        gender='Female',
+                        mobile='9999872282',
+                        date_of_birth=['21', 'May', '1996'],
+                        subject='Chemistry',
+                        hobby='Reading',
+                        file='girafe.jpg',
+                        address='41 Eastern Avenue APT 243 San Francisco, 77338',
+                        state='Rajasthan',
+                        city='Jaiselmer'
+                        )
